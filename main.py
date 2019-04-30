@@ -13,8 +13,6 @@
 #     name: python3
 # ---
 
-
-
 # +
 from gssutils import *
 from requests import Session
@@ -51,6 +49,44 @@ to_remove = set(table.columns) - set(cols.keys())
 table.rename(columns=cols, inplace=True)
 table.drop(columns=to_remove, inplace=True)
 table
+
+# The OData API offers an "Items" endpoint that enumerates the values of the various dimensions and provides information about the hierarchy.
+
+items_dist = scraper.distribution(title='Items')
+items = items_dist.as_pandas()
+display(items)
+items['DimensionName_ENG'].unique()
+
+# +
+from collections import OrderedDict
+item_cols = OrderedDict([
+    ('Description_ENG', 'Label'),
+    ('Code', 'Notation'),
+    ('Hierarchy', 'Parent Notation'),
+    ('SortOrder', 'Sort Priority')
+])
+
+def extract_codelist(dimension):
+    codelist = items[items['DimensionName_ENG'] == dimension].rename(
+        columns=item_cols).drop(
+        columns=set(items.columns) - set(item_cols.keys()))[list(item_cols.values())]
+    codelist['Notation'] = codelist['Notation'].map(
+        lambda x: str(int(x)) if str(x).endswith(".0") else str(x)
+    )
+    return codelist
+
+codelists = {
+    'chargeable-homes': extract_codelist('Row')
+}
+
+out = Path('out')
+out.mkdir(exist_ok=True, parents=True)
+
+for name, codelist in codelists.items():
+    codelist.to_csv(out / f'{name}.csv', index = False)
+    display(name)
+    display(codelist)
+# -
 
 table['Period'] = table['Period'].map(lambda x: f'gregorian-interval/{str(x)[:4]}-03-31T00:00:00/P1Y')
 table['Measure Type'] = 'Count'

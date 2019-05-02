@@ -43,7 +43,8 @@ cols = {
     'Authority_AltCode1': 'Geography',
     'Data': 'Value',
     'Row_Code': 'Chargeable homes',
-    'Year_Code': 'Period'
+    'Year_Code': 'Period',
+    'Band_Code': 'Council tax band'
 }
 to_remove = set(table.columns) - set(cols.keys())
 table.rename(columns=cols, inplace=True)
@@ -76,7 +77,8 @@ def extract_codelist(dimension):
     return codelist
 
 codelists = {
-    'chargeable-homes': extract_codelist('Row')
+    'chargeable-homes': extract_codelist('Row'),
+    'council-tax-bands': extract_codelist('Band')
 }
 
 out = Path('out')

@@ -98,7 +98,7 @@ out = Path('out')
 out.mkdir(exist_ok=True, parents=True)
 table.drop_duplicates().to_csv(out / 'observations.csv', index = False)
 
-schema = CSVWSchema('https://ons-opendata.github.io/ref_housing/')
+schema = CSVWMetadata('https://ons-opendata.github.io/ref_housing/')
 schema.create(out / 'observations.csv', out / 'observations.csv-schema.json')
 
 from datetime import datetime

@@ -6,7 +6,7 @@
 #       extension: .py
 #       format_name: light
 #       format_version: '1.4'
-#       jupytext_version: 1.1.1
+#       jupytext_version: 1.2.4
 #   kernelspec:
 #     display_name: Python 3
 #     language: python
@@ -98,7 +98,8 @@ out = Path('out')
 out.mkdir(exist_ok=True, parents=True)
 table.drop_duplicates().to_csv(out / 'observations.csv', index = False)
 
-schema = CSVWMetadata('https://ons-opendata.github.io/ref_housing/')
+#schema = CSVWMetadata('https://ons-opendata.github.io/ref_housing/')
+schema = CSVWMetadata('https://gss-cogs.github.io/ref_housing/')
 schema.create(out / 'observations.csv', out / 'observations.csv-schema.json')
 
 from datetime import datetime
@@ -109,6 +110,6 @@ scraper.dataset.creator = scraper.dataset.publisher
 with open(out / 'dataset.trig', 'wb') as metadata:
     metadata.write(scraper.generate_trig())
 
+table['Council tax band'].unique()
+
 table
-
-

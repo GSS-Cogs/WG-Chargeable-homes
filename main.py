@@ -89,11 +89,17 @@ for name, codelist in codelists.items():
     codelist.to_csv(out / f'{name}.csv', index = False)
     display(name)
     display(codelist)
-# -
 
+# +
 table['Period'] = table['Period'].map(lambda x: f'gregorian-interval/{str(x)[:4]}-03-31T00:00:00/P1Y')
 table['Measure Type'] = 'Count'
 table['Unit'] = 'vacancies'
+
+table['Council tax band'] = table['Council tax band'].map(
+    lambda x: {
+        'A-' : 'Adash'
+        }.get(x, x))
+# -
 
 out = Path('out')
 out.mkdir(exist_ok=True, parents=True)
@@ -115,11 +121,11 @@ with open(out / 'dataset.trig', 'wb') as metadata:
 #table['Geography'].unique()
 # -
 
-table['Council tax band'] = table['Council tax band'].map(
-    lambda x: {
-        'A-' : 'Adash'
-        }.get(x, x))
 table['Council tax band'].unique()
 
 # +
 #table['Chargeable homes'].unique()
+#table.head
+# -
+
+

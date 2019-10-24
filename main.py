@@ -97,7 +97,8 @@ table['Unit'] = 'vacancies'
 
 table['Council tax band'] = table['Council tax band'].map(
     lambda x: {
-        'A-' : 'Adash'
+        'A-' : 'Adash',
+        'Total' : 'total'
         }.get(x, x))
 # -
 
@@ -119,13 +120,10 @@ with open(out / 'dataset.trig', 'wb') as metadata:
 
 # +
 #table['Geography'].unique()
-# -
 
-table['Council tax band'].unique()
+# +
+#table['Council tax band'].unique()
 
 # +
 #table['Chargeable homes'].unique()
 #table.head
-# -
-
-

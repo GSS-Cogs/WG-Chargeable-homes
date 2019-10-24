@@ -37,26 +37,27 @@ if len(scraper.distributions) == 0:
 table = scraper.distribution(title='Dataset').as_pandas()
 table
 
-table.columns
+# +
+#table.columns
+# -
 
 cols = {
     'Authority_AltCode1': 'Geography',
     'Data': 'Value',
     'Row_Code': 'Chargeable homes',
     'Year_Code': 'Period',
-    'Band_Code': 'Council tax band'
+    'Band_ItemName_ENG': 'Council tax band'
 }
 to_remove = set(table.columns) - set(cols.keys())
 table.rename(columns=cols, inplace=True)
 table.drop(columns=to_remove, inplace=True)
-table
 
 # The OData API offers an "Items" endpoint that enumerates the values of the various dimensions and provides information about the hierarchy.
 
 items_dist = scraper.distribution(title='Items')
 items = items_dist.as_pandas()
-display(items)
-items['DimensionName_ENG'].unique()
+#display(items)
+#items['DimensionName_ENG'].unique()
 
 # +
 from collections import OrderedDict
@@ -110,6 +111,11 @@ scraper.dataset.creator = scraper.dataset.publisher
 with open(out / 'dataset.trig', 'wb') as metadata:
     metadata.write(scraper.generate_trig())
 
-table['Council tax band'].unique()
+# +
+#table['Geography'].unique()
 
-table
+# +
+#table['Council tax band'].unique()
+
+# +
+#table['Chargeable homes'].unique()

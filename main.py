@@ -43,8 +43,7 @@ from cachecontrol.heuristics import ExpiresAfter
 
 # Scrape the data
 # the 'cache' stuff helps with the generally unreliability of the site
-scraper = Scraper('https://statswales.gov.wales/Catalogue/Housing/Social-Housing-Vacancies/'
-                  'vacancies-by-area-availability-duration',
+scraper = Scraper('https://statswales.gov.wales/Catalogue/Local-Government/Finance/Council-Tax/Dwellings/chargeableemptyandsecondhomesbylocalauthority',
                   session=CacheControl(requests.Session(), cache=FileCache('.cache'), heuristic=ExpiresAfter(days=7)))
                                        
 scraper
